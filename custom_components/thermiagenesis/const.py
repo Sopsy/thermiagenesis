@@ -1024,7 +1024,7 @@ SENSOR_TYPES = {
     thermiaconst.ATTR_INPUT_MIX_VALVE_1_POSITION: {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Mix Valve 1 Position",
-        ATTR_UNIT: UNIT_TEMPERATURE,
+        ATTR_UNIT: PERCENTAGE,
         ATTR_DEFAULT_ENABLED: False,
     },
     thermiaconst.ATTR_INPUT_BRINE_CIRCULATION_PUMP_SPEED: {
@@ -1105,12 +1105,6 @@ SENSOR_TYPES = {
         ATTR_UNIT: None,
         ATTR_DEFAULT_ENABLED: False,
     },
-    thermiaconst.ATTR_INPUT_COMPRESSOR_CURRENT_GEAR: {
-        ATTR_ICON: ICON_INPUT,
-        ATTR_LABEL: "Compressor Current Gear",
-        ATTR_UNIT: None,
-        ATTR_DEFAULT_ENABLED: False,
-    },
     thermiaconst.ATTR_INPUT_QUEUED_DEMAND_FIRST_PRIORITY: {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Queued Demand First Priority",
@@ -1138,12 +1132,6 @@ SENSOR_TYPES = {
     thermiaconst.ATTR_INPUT_QUEUED_DEMAND_FIFTH_PRIORITY: {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Queued Demand Fifth Priority",
-        ATTR_UNIT: None,
-        ATTR_DEFAULT_ENABLED: False,
-    },
-    thermiaconst.ATTR_INPUT_INTERNAL_ADDITIONAL_HEATER_CURRENT_STEP: {
-        ATTR_ICON: ICON_INPUT,
-        ATTR_LABEL: "Internal Additional Heater Current Step",
         ATTR_UNIT: None,
         ATTR_DEFAULT_ENABLED: False,
     },
@@ -1760,6 +1748,18 @@ NUMBER_TYPES = {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Stop Temperature Tap Water",
         ATTR_UNIT: UNIT_TEMPERATURE,
+        ATTR_DEFAULT_ENABLED: False,
+    },
+    thermiaconst.ATTR_INPUT_INTERNAL_ADDITIONAL_HEATER_CURRENT_STEP: {
+        ATTR_ICON: ICON_INPUT,
+        ATTR_LABEL: "Internal Additional Heater Current Step",
+        ATTR_UNIT: None,
+        ATTR_DEFAULT_ENABLED: False,
+    },
+    thermiaconst.ATTR_INPUT_COMPRESSOR_CURRENT_GEAR: {
+        ATTR_ICON: ICON_INPUT,
+        ATTR_LABEL: "Compressor Current Gear",
+        ATTR_UNIT: None,
         ATTR_DEFAULT_ENABLED: False,
     },
     thermiaconst.ATTR_HOLDING_MINIMUM_ALLOWED_GEAR_IN_HEATING: {
