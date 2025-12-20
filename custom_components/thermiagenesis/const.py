@@ -12,17 +12,15 @@ from homeassistant.const import UnitOfTemperature
 ATTR_ICON = "icon"
 ATTR_LABEL = "label"
 ATTR_MANUFACTURER = "Thermia"
-ATTR_STATUS = "status"
 ATTR_UNIT = "unit"
 ATTR_CLASS = "device_class"
 ATTR_STATE_CLASS = "state_class"
-ATTR_UPTIME = "uptime"
 ATTR_ENABLED = "enabled"
 ATTR_DEFAULT_ENABLED = "default_enabled"
-ATTR_SCALE = "scale"
-ATTR_ADDR = "address"
 ATTR_MAX_VALUE = "max_value"
 ATTR_MIN_VALUE = "min_value"
+ATTR_FIRMWARE = "firmware"
+ATTR_MODEL = "Genesis"
 
 KEY_STATE_ATTRIBUTES = "state_attrs"
 KEY_STATUS_VALUE = "status_value"
@@ -37,22 +35,13 @@ UNIT_AMPERE = "A"
 UNIT_WATT = "W"
 UNIT_ENERGY = "kWh"
 
-
 DOMAIN = "thermiagenesis"
 
-MODEL_MEGA = "mega"
-MODEL_INVERTER = "inverter"
-
-ICON_DINPUT = "mdi-toggle-switch"
 ICON_INPUT = "mdi-gauge"
-ICON_COIL = "mdi-pencil"
-ICON_HOLDING = "mdi-gauge"
 CLASS_RELAY = "opening"
 CLASS_ALARM = "problem"
 CLASS_STATE = "plug"
 CLASS_ENERGY = "energy"
-
-ATTR_STATUS = thermiaconst.ATTR_INPUT_FIRST_PRIORITISED_DEMAND
 
 HEATPUMP_SENSOR = thermiaconst.ATTR_INPUT_FIRST_PRIORITISED_DEMAND
 HEATPUMP_ATTRIBUTES = [
@@ -1105,6 +1094,12 @@ SENSOR_TYPES = {
         ATTR_UNIT: None,
         ATTR_DEFAULT_ENABLED: False,
     },
+    thermiaconst.ATTR_INPUT_COMPRESSOR_CURRENT_GEAR: {
+        ATTR_ICON: ICON_INPUT,
+        ATTR_LABEL: "Compressor Current Gear",
+        ATTR_UNIT: " ",
+        ATTR_DEFAULT_ENABLED: False,
+    },
     thermiaconst.ATTR_INPUT_QUEUED_DEMAND_FIRST_PRIORITY: {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Queued Demand First Priority",
@@ -1132,6 +1127,12 @@ SENSOR_TYPES = {
     thermiaconst.ATTR_INPUT_QUEUED_DEMAND_FIFTH_PRIORITY: {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Queued Demand Fifth Priority",
+        ATTR_UNIT: None,
+        ATTR_DEFAULT_ENABLED: False,
+    },
+    thermiaconst.ATTR_INPUT_INTERNAL_ADDITIONAL_HEATER_CURRENT_STEP: {
+        ATTR_ICON: ICON_INPUT,
+        ATTR_LABEL: "Internal Additional Heater Current Step",
         ATTR_UNIT: None,
         ATTR_DEFAULT_ENABLED: False,
     },
@@ -1561,31 +1562,31 @@ SENSOR_TYPES = {
     thermiaconst.ATTR_INPUT_DESIRED_TEMPERATURE_DISTRIBUTION_CIRCUIT_MIX_VALVE_1: {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Desired Temperature Distribution Circuit Mix Valve 1",
-        ATTR_UNIT: None,
+        ATTR_UNIT: UNIT_TEMPERATURE,
         ATTR_DEFAULT_ENABLED: False,
     },
     thermiaconst.ATTR_INPUT_DESIRED_TEMPERATURE_DISTRIBUTION_CIRCUIT_MIX_VALVE_2: {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Desired Temperature Distribution Circuit Mix Valve 2",
-        ATTR_UNIT: None,
+        ATTR_UNIT: UNIT_TEMPERATURE,
         ATTR_DEFAULT_ENABLED: False,
     },
     thermiaconst.ATTR_INPUT_DESIRED_TEMPERATURE_DISTRIBUTION_CIRCUIT_MIX_VALVE_3: {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Desired Temperature Distribution Circuit Mix Valve 3",
-        ATTR_UNIT: None,
+        ATTR_UNIT: UNIT_TEMPERATURE,
         ATTR_DEFAULT_ENABLED: False,
     },
     thermiaconst.ATTR_INPUT_DESIRED_TEMPERATURE_DISTRIBUTION_CIRCUIT_MIX_VALVE_4: {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Desired Temperature Distribution Circuit Mix Valve 4",
-        ATTR_UNIT: None,
+        ATTR_UNIT: UNIT_TEMPERATURE,
         ATTR_DEFAULT_ENABLED: False,
     },
     thermiaconst.ATTR_INPUT_DESIRED_TEMPERATURE_DISTRIBUTION_CIRCUIT_MIX_VALVE_5: {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Desired Temperature Distribution Circuit Mix Valve 5",
-        ATTR_UNIT: None,
+        ATTR_UNIT: UNIT_TEMPERATURE,
         ATTR_DEFAULT_ENABLED: False,
     },
     thermiaconst.ATTR_INPUT_DISCONNECT_HOT_GAS_END_TANK: {
@@ -1750,24 +1751,12 @@ NUMBER_TYPES = {
         ATTR_UNIT: UNIT_TEMPERATURE,
         ATTR_DEFAULT_ENABLED: False,
     },
-    thermiaconst.ATTR_INPUT_INTERNAL_ADDITIONAL_HEATER_CURRENT_STEP: {
-        ATTR_ICON: ICON_INPUT,
-        ATTR_LABEL: "Internal Additional Heater Current Step",
-        ATTR_UNIT: None,
-        ATTR_DEFAULT_ENABLED: False,
-    },
-    thermiaconst.ATTR_INPUT_COMPRESSOR_CURRENT_GEAR: {
-        ATTR_ICON: ICON_INPUT,
-        ATTR_LABEL: "Compressor Current Gear",
-        ATTR_UNIT: None,
-        ATTR_DEFAULT_ENABLED: False,
-    },
     thermiaconst.ATTR_HOLDING_MINIMUM_ALLOWED_GEAR_IN_HEATING: {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Minimum Allowed Gear In Heating",
         ATTR_UNIT: None,
         ATTR_MIN_VALUE: 1,
-        ATTR_MAX_VALUE: 9,
+        ATTR_MAX_VALUE: 12,
         ATTR_DEFAULT_ENABLED: False,
     },
     thermiaconst.ATTR_HOLDING_MAXIMUM_ALLOWED_GEAR_IN_HEATING: {
@@ -1775,7 +1764,7 @@ NUMBER_TYPES = {
         ATTR_LABEL: "Maximum Allowed Gear In Heating",
         ATTR_UNIT: None,
         ATTR_MIN_VALUE: 1,
-        ATTR_MAX_VALUE: 9,
+        ATTR_MAX_VALUE: 12,
         ATTR_DEFAULT_ENABLED: False,
     },
     thermiaconst.ATTR_HOLDING_MAXIMUM_ALLOWED_GEAR_IN_TAP_WATER: {
@@ -1783,7 +1772,7 @@ NUMBER_TYPES = {
         ATTR_LABEL: "Maximum Allowed Gear In Tap Water",
         ATTR_UNIT: None,
         ATTR_MIN_VALUE: 1,
-        ATTR_MAX_VALUE: 9,
+        ATTR_MAX_VALUE: 12,
         ATTR_DEFAULT_ENABLED: False,
     },
     thermiaconst.ATTR_HOLDING_MINIMUM_ALLOWED_GEAR_IN_TAP_WATER: {
@@ -1791,7 +1780,7 @@ NUMBER_TYPES = {
         ATTR_LABEL: "Minimum Allowed Gear In Tap Water",
         ATTR_UNIT: None,
         ATTR_MIN_VALUE: 1,
-        ATTR_MAX_VALUE: 9,
+        ATTR_MAX_VALUE: 12,
         ATTR_DEFAULT_ENABLED: False,
     },
     thermiaconst.ATTR_HOLDING_COOLING_MIX_VALVE_SET_POINT: {
@@ -2086,7 +2075,7 @@ NUMBER_TYPES = {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Minimum Allowed Gear In Pool",
         ATTR_MIN_VALUE: 1,
-        ATTR_MAX_VALUE: 9,
+        ATTR_MAX_VALUE: 12,
         ATTR_UNIT: None,
         ATTR_DEFAULT_ENABLED: False,
     },
@@ -2094,7 +2083,7 @@ NUMBER_TYPES = {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Maximum Allowed Gear In Pool",
         ATTR_MIN_VALUE: 1,
-        ATTR_MAX_VALUE: 9,
+        ATTR_MAX_VALUE: 12,
         ATTR_UNIT: None,
         ATTR_DEFAULT_ENABLED: False,
     },
@@ -2102,7 +2091,7 @@ NUMBER_TYPES = {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Minimum Allowed Gear In Cooling",
         ATTR_MIN_VALUE: 1,
-        ATTR_MAX_VALUE: 9,
+        ATTR_MAX_VALUE: 12,
         ATTR_UNIT: None,
         ATTR_DEFAULT_ENABLED: False,
     },
@@ -2110,7 +2099,7 @@ NUMBER_TYPES = {
         ATTR_ICON: ICON_INPUT,
         ATTR_LABEL: "Maximum Allowed Gear In Cooling",
         ATTR_MIN_VALUE: 1,
-        ATTR_MAX_VALUE: 9,
+        ATTR_MAX_VALUE: 12,
         ATTR_UNIT: None,
         ATTR_DEFAULT_ENABLED: False,
     },

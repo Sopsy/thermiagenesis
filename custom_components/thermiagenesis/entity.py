@@ -1,14 +1,12 @@
 """ThermiaGenesisEntity class"""
 import logging
-
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from .const import ATTR_FIRMWARE
 from .const import ATTR_MANUFACTURER
+from .const import ATTR_MODEL
 from .const import DOMAIN
-
-ATTR_MODEL = "Diplomat Inverter Duo"
-ATTR_FIRMWARE = "firmware"
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 

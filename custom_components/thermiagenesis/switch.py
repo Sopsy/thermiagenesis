@@ -1,18 +1,15 @@
 import logging
-
 from homeassistant.components.switch import SwitchEntity
 from pythermiagenesis.const import REGISTERS
 
 from .const import ATTR_CLASS
 from .const import ATTR_DEFAULT_ENABLED
+from .const import ATTR_FIRMWARE
 from .const import ATTR_LABEL
 from .const import ATTR_MANUFACTURER
+from .const import ATTR_MODEL
 from .const import DOMAIN
 from .const import SWITCH_TYPES
-
-ATTR_COUNTER = "counter"
-ATTR_FIRMWARE = "firmware"
-ATTR_MODEL = "Diplomat Inverter Duo"
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -43,7 +40,6 @@ class ThermiaSwitch(SwitchEntity):
     def __init__(self, coordinator, kind, device_info):
         """Initialize."""
         self._name = f"{SWITCH_TYPES[kind][ATTR_LABEL]}"
-        # self._name = f"{coordinator.data[ATTR_MODEL]} {SENSOR_TYPES[kind][ATTR_LABEL]}"
         self._unique_id = f"thermiagenesis_{kind}"
         self._device_info = device_info
         self.coordinator = coordinator

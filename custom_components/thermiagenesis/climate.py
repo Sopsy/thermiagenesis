@@ -1,6 +1,5 @@
 """ Thermia Genesis climate sensors."""
 import logging
-
 from homeassistant.components.climate import ClimateEntity
 from homeassistant.components.climate.const import ATTR_CURRENT_TEMPERATURE
 from homeassistant.components.climate.const import ATTR_MAX_TEMP
@@ -15,17 +14,15 @@ from homeassistant.const import ATTR_TEMPERATURE
 from homeassistant.const import UnitOfTemperature
 from homeassistant.util.unit_conversion import TemperatureConverter
 
-from .const import ATTR_DEFAULT_ENABLED
+from .const import ATTR_DEFAULT_ENABLED, HEATPUMP_SENSOR
 from .const import ATTR_ENABLED
+from .const import ATTR_FIRMWARE
 from .const import ATTR_LABEL
 from .const import ATTR_MANUFACTURER
-from .const import ATTR_STATUS
+from .const import ATTR_MODEL
 from .const import CLIMATE_TYPES
 from .const import DOMAIN
 from .const import KEY_STATUS_VALUE
-
-ATTR_FIRMWARE = "firmware"
-ATTR_MODEL = "Diplomat Inverter Duo"
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -62,7 +59,6 @@ class ThermiaClimateSensor(ClimateEntity):
         self.kind = kind
         self.meta = CLIMATE_TYPES[kind]
         self._name = f"{self.meta[ATTR_LABEL]}"
-        # self._name = f"{coordinator.data[ATTR_MODEL]} {SENSOR_TYPES[kind][ATTR_LABEL]}"
         self._unique_id = f"thermiagenesis_{kind}"
         self._device_info = device_info
         self.coordinator = coordinator
@@ -175,7 +171,7 @@ class ThermiaClimateSensor(ClimateEntity):
         isEnabled = self.coordinator.data.get(self.meta[ATTR_ENABLED])
         if not isEnabled:
             return HVACAction.OFF
-        val = self.coordinator.data.get(ATTR_STATUS)
+        val = self.coordinator.data.get(HEATPUMP_SENSOR)
         if val == self.meta[KEY_STATUS_VALUE]:
             return HVACAction.HEATING
         return HVACAction.IDLE

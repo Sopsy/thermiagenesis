@@ -1,14 +1,15 @@
 import logging
-
 from homeassistant.components.sensor import SensorStateClass
 from homeassistant.helpers.entity import Entity
 from pythermiagenesis.const import REGISTERS
 
 from .const import ATTR_CLASS
 from .const import ATTR_DEFAULT_ENABLED
+from .const import ATTR_FIRMWARE
 from .const import ATTR_ICON
 from .const import ATTR_LABEL
 from .const import ATTR_MANUFACTURER
+from .const import ATTR_MODEL
 from .const import ATTR_STATE_CLASS
 from .const import ATTR_UNIT
 from .const import DOMAIN
@@ -16,10 +17,6 @@ from .const import HEATPUMP_ALARMS
 from .const import HEATPUMP_ATTRIBUTES
 from .const import HEATPUMP_SENSOR
 from .const import SENSOR_TYPES
-
-ATTR_COUNTER = "counter"
-ATTR_FIRMWARE = "firmware"
-ATTR_MODEL = "Diplomat Inverter Duo"
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -42,6 +39,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     for sensor in SENSOR_TYPES:
         if REGISTERS[sensor][coordinator.kind]:
             sensors.append(ThermiaGenericSensor(coordinator, sensor, device_info))
+
     async_add_entities(sensors, False)
 
 
@@ -51,7 +49,6 @@ class ThermiaHeatpumpSensor(Entity):
     def __init__(self, coordinator, kind, device_info):
         """Initialize."""
         self._name = "Heatpump"
-        # self._name = f"{coordinator.data[ATTR_MODEL]} {SENSOR_TYPES[kind][ATTR_LABEL]}"
         self._unique_id = "thermiagenesis_heatpump"
         self._device_info = device_info
         self.coordinator = coordinator
@@ -149,7 +146,6 @@ class ThermiaGenericSensor(Entity):
     def __init__(self, coordinator, kind, device_info):
         """Initialize."""
         self._name = f"{SENSOR_TYPES[kind][ATTR_LABEL]}"
-        # self._name = f"{coordinator.data[ATTR_MODEL]} {SENSOR_TYPES[kind][ATTR_LABEL]}"
         self._unique_id = f"thermiagenesis_{kind}"
         self._device_info = device_info
         self.coordinator = coordinator
@@ -164,8 +160,7 @@ class ThermiaGenericSensor(Entity):
     @property
     def state(self):
         """Return the state."""
-        val = self.coordinator.data.get(self.kind)
-        return val
+        return self.coordinator.data.get(self.kind)
 
     @property
     def extra_state_attributes(self):
@@ -189,12 +184,12 @@ class ThermiaGenericSensor(Entity):
 
     @property
     def device_class(self):
-        """Return de device class of the sensor."""
+        """Return the device class of the sensor."""
         return SENSOR_TYPES[self.kind].get(ATTR_CLASS, None)
 
     @property
     def state_class(self):
-        """Return de device class of the sensor."""
+        """Return thee state class of the sensor."""
         return SENSOR_TYPES[self.kind].get(
             ATTR_STATE_CLASS, SensorStateClass.MEASUREMENT
         )

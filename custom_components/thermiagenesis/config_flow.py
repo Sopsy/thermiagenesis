@@ -1,6 +1,5 @@
 """Adds config flow for ThermiaGenesis heat pump."""
 import logging
-
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.const import CONF_HOST
@@ -20,7 +19,6 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
         vol.Required(CONF_TYPE, default="inverter"): str,
     }
 )
-
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -90,7 +88,6 @@ class ThermiaGenesisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 self._errors["base"] = "connection_error"
 
         return await self._show_config_form(user_input)
-
 
 # class ThermiaGenesisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 #     """Handle a config flow for ThermiaGenesis heat pump."""
